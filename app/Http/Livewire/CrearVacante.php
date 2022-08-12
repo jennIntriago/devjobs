@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Salario;
+use App\Models\Vacante;
 use Livewire\Component;
 use App\Models\Categoria;
 use Livewire\WithFileUploads;
@@ -31,7 +32,33 @@ class CrearVacante extends Component
         'imagen' => 'required|image|max:1024'
     ];
     public function crearVacante(){
+
+        //Esta variable datos ya tiene acceso al request ya validado
         $datos = $this->validate();
+        
+        //Almacenar imagen en alguna ruta
+        $imagen = $this->imagen->store('public/vacantes');
+
+        //str_replace() busca un string y lo reemplaza por algo
+        $datos['imagen'] = str_replace('public/vacantes/', '', $imagen);
+        
+        //Crear vacante
+        Vacante::create([
+            'titulo'=> $datos['titulo'],
+            'salario_id'=> $datos['salario'],
+            'categoria_id'=> $datos['categoria'],
+            'empresa'=> $datos['empresa'],
+            'ultimo_dia'=> $datos['ultimo_dia'],
+            'descripcion'=> $datos['descripcion'],
+            'imagen'=> $datos['imagen'],
+            'user_id'=> auth()->user()->id,
+        ]);
+        //Crear mensaje
+        session()->flash('mensaje', 'La Vacante se publicó correctamente');
+
+        //Redireccionar al usuario
+        return redirect()->route('vacantes.index');
+    
     }
     public function render()
     {   
