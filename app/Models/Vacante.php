@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Vacante extends Model
 {
     use HasFactory;
+    //Le especifica al modelo que el campo ultimo_dia será tipo date
+    protected $dates = ['ultimo_dia'];
 
     protected $fillable = [
         'titulo',
