@@ -15,6 +15,7 @@
 
         {{-- Livewire iniciar estilos --}}
         @livewireStyles
+        @stack('styles')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -36,5 +37,6 @@
         {{-- Livewire iniciar scripts--}}
 
         @livewireScripts
+        @stack('scripts')
     </body>
 </html>
